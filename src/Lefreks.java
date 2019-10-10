@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -38,19 +39,18 @@ public class Lefreks extends Application {
         menuButton.setLayoutY(10);
 
         // Points text
-        Text textPoints = new Text(10, 30, "Points: " + numberHandler.getPoints());
-        textPoints.setFont(Font.font("Helvetica", 20));
-        textPoints.setFill(Color.CRIMSON);
+        Text textPoints = new Text(10, 35, "POINTS: " + numberHandler.getPoints());
+        textPoints.setFont(Font.font("Verdana", FontWeight.BLACK, 20));
+        textPoints.setFill(Color.INDIANRED);
 
         // Timer text
         // TODO
-        // Text textTimer = new Text(10, 65, "Timer: " + numberHandler.getTimePassed());
-        // textTimer.setFont(Font.font("Helvetica", 20));
-        // textTimer.setFill(Color.CRIMSON);
+        Text textTimer = new Text(10, 65, "TIMER: " + numberHandler.getTimePassed());
+        textTimer.setFont(Font.font("Verdana", FontWeight.BLACK,20));
+        textTimer.setFill(Color.INDIANRED);
 
         // Target
         Circle target = new Circle(RESX / 2, RESY / 2, targetSize, Color.INDIANRED);
-
 
         // Mouse click event handler
         target.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -64,23 +64,32 @@ public class Lefreks extends Application {
                 target.setCenterY((int) (Math.random() * (RESY - 2 * targetSize - INGAME_MENU_SIZE) + targetSize + INGAME_MENU_SIZE));
 
                 numberHandler.setPoints(numberHandler.getPoints() + 1);
-                textPoints.setText("Points: " + numberHandler.getPoints());
+                textPoints.setText("POINTS: " + numberHandler.getPoints());
 
-                System.out.println(numberHandler.getTimePassed());
 
                 if (numberHandler.isStartTimer() && !numberHandler.isStartedTimer()) {
-                    numberHandler.timer.scheduleAtFixedRate(numberHandler.task, 10, 1000);
+                    numberHandler.timer.scheduleAtFixedRate(numberHandler.startCounting, 0, 1000);
                     numberHandler.setStartedTimer(true);
                 }
             }
         });
 
 
+
+
         // Add shapes to a group
-        playingArea.getChildren().addAll(guiBar, menuButton, target, textPoints);
+        playingArea.getChildren().addAll(guiBar, menuButton, target, textPoints, textTimer);
+
+        playingArea.setOnMouseMoved(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent e) {
+                textTimer.setText("TIMER: " + numberHandler.getTimePassed());
+            }
+        });
 
         // Game window styling
-        Scene gameScene = new Scene(playingArea, 1024, 768);
+        Scene gameScene = new Scene(playingArea, RESX, RESY);
         gameScene.setFill(Color.rgb(255, 251, 235));
         stage.setTitle("Lefreks");
         stage.setScene(gameScene);
@@ -90,4 +99,5 @@ public class Lefreks extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }

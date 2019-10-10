@@ -36,10 +36,11 @@ public class NumberHandler {
     public boolean isStartTimer() { return startTimer; }
 
     Timer timer = new Timer();
-    TimerTask task = new TimerTask() {
+    TimerTask startCounting = new TimerTask() {
         @Override
         public void run() {
             setTimePassed(getTimePassed() + 1);
+            System.out.println(getTimePassed());
         }
     };
 }
