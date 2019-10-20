@@ -13,13 +13,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Lefreks extends Application {
+    NumberHandler numberHandler = new NumberHandler();
 
     @Override
     public void start(Stage stage) {
         // Resolution variables
         int RESX = 1024,
-            RESY = 768,
-            INGAME_MENU_SIZE = 90;
+                RESY = 768,
+                INGAME_MENU_SIZE = 90;
         stage.setResizable(false);
 
         // Playing area
@@ -28,7 +29,7 @@ public class Lefreks extends Application {
 
         // Game setting variables
         int targetSize = 40; // TODO -- DEBUG VALUE
-        NumberHandler numberHandler = new NumberHandler();
+
 
         // Ingame menu background
         Rectangle guiBar = new Rectangle(RESX, INGAME_MENU_SIZE, Color.rgb(71, 59, 59));
@@ -44,10 +45,10 @@ public class Lefreks extends Application {
         textPoints.setFill(Color.INDIANRED);
 
         // Timer text
-        // TODO
-        Text textTimer = new Text(10, 65, "TIMER: " + numberHandler.getTimePassed());
-        textTimer.setFont(Font.font("Verdana", FontWeight.BLACK,20));
+        Text textTimer = new Text(10, 65, "");
+        textTimer.setFont(Font.font("Verdana", FontWeight.BLACK, 20));
         textTimer.setFill(Color.INDIANRED);
+        textTimer.textProperty().bind(numberHandler.getText());
 
         // Target
         Circle target = new Circle(RESX / 2, RESY / 2, targetSize, Color.INDIANRED);
@@ -74,19 +75,8 @@ public class Lefreks extends Application {
             }
         });
 
-
-
-
         // Add shapes to a group
         playingArea.getChildren().addAll(guiBar, menuButton, target, textPoints, textTimer);
-
-        playingArea.setOnMouseMoved(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent e) {
-                textTimer.setText("TIMER: " + numberHandler.getTimePassed());
-            }
-        });
 
         // Game window styling
         Scene gameScene = new Scene(playingArea, RESX, RESY);
@@ -94,6 +84,11 @@ public class Lefreks extends Application {
         stage.setTitle("Lefreks");
         stage.setScene(gameScene);
         stage.show();
+    }
+
+    @Override
+    public void stop() {
+        numberHandler.timer.cancel();
     }
 
     public static void main(String[] args) {

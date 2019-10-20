@@ -1,12 +1,18 @@
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class NumberHandler {
+    // Variables
     private int points;
     private int timePassed = 0;
+    private StringProperty timerText = new SimpleStringProperty("TIMER: " + getTimePassed());
     private boolean startTimer = false,
-                    startedTimer = false;
+            startedTimer = false;
 
+    // Getters and setters
     public void setPoints(int points) {
         this.points = points;
     }
@@ -27,20 +33,29 @@ public class NumberHandler {
         this.startedTimer = startedTimer;
     }
 
-    public boolean isStartedTimer() { return startedTimer; }
+    public boolean isStartedTimer() {
+        return startedTimer;
+    }
 
     public void setStartTimer(boolean startTimer) {
         this.startTimer = startTimer;
     }
 
-    public boolean isStartTimer() { return startTimer; }
+    public boolean isStartTimer() {
+        return startTimer;
+    }
 
+    public StringProperty getText() {
+        return timerText;
+    }
+
+    // Timer counting method
     Timer timer = new Timer();
     TimerTask startCounting = new TimerTask() {
         @Override
         public void run() {
             setTimePassed(getTimePassed() + 1);
-            System.out.println(getTimePassed());
+            timerText.set("TIMER: " + getTimePassed());
         }
     };
 }
