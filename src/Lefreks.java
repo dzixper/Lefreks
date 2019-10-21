@@ -14,10 +14,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.print.attribute.EnumSyntax;
+
 public class Lefreks extends Application {
     NumberHandler numberHandler = new NumberHandler();
 
-    Scene menuScene, gameScene, scoreboardScene;
+    Scene menuScene, gameScene, scoreboardScene, difficultyScene;
 
     @Override
     public void start(Stage stage) {
@@ -33,24 +35,54 @@ public class Lefreks extends Application {
         //
 
         BorderPane menuArea = new BorderPane();
-
         Button playButton = new Button("Play");
-        Button leaderboardButton = new Button("Leaderboard");
+
+        playButton.setOnAction(e -> stage.setScene(difficultyScene));
+
+        Button leaderboardButton = new Button("Leaderboard"); // TODO
+
         Button exitButton = new Button("Exit");
+        exitButton.setOnAction(e -> stage.close());
 
-        VBox vbox = new VBox();
-        vbox.setSpacing(15);
+        VBox menuVbox = new VBox();
+        menuVbox.setSpacing(20);
 
-        vbox.getChildren().addAll(playButton, leaderboardButton, exitButton);
-        vbox.setAlignment(Pos.CENTER);
-        menuArea.setCenter(vbox);
+        menuVbox.getChildren().addAll(playButton, leaderboardButton, exitButton);
+        menuVbox.setAlignment(Pos.CENTER);
+        menuArea.setCenter(menuVbox);
 
         // Area styling
         menuArea.setBackground(new Background(new BackgroundFill(Color.rgb(255,251,235), CornerRadii.EMPTY, Insets.EMPTY)));
-        menuScene = new Scene (menuArea, RESX, RESY);
+        menuScene = new Scene(menuArea, RESX, RESY);
+
+        //
+        // DIFFICULTY SELECTION
+        //
+
+        BorderPane difficultyArea = new BorderPane();
 
 
+        Button easyButton = new Button("Easy");
+        easyButton.setOnAction(e -> {
+            numberHandler.setTargetSize(200);
+            stage.setScene(gameScene);
+        });
 
+
+        Button normalButton = new Button("Normal");
+
+
+        Button hardButton = new Button("Hard");
+
+        VBox difficultyVbox = new VBox();
+        difficultyVbox.setSpacing(20);
+
+        difficultyVbox.getChildren().addAll(easyButton,normalButton,hardButton);
+        difficultyVbox.setAlignment(Pos.CENTER);
+        difficultyArea.setCenter(difficultyVbox);
+
+        difficultyArea.setBackground(new Background(new BackgroundFill(Color.rgb(255,251,235), CornerRadii.EMPTY, Insets.EMPTY)));
+        difficultyScene = new Scene(difficultyArea, RESX, RESY);
 
         //
         // PLAYING AREA SECTION
@@ -59,17 +91,14 @@ public class Lefreks extends Application {
         // Playing area init
         Pane playingArea = new Pane();
 
-
-        // Game setting variables
-        int targetSize = 100;
-
         // Ingame menu background
         Rectangle guiBar = new Rectangle(RESX, INGAME_MENU_SIZE, Color.rgb(71, 59, 59));
 
-        // TODO -- menu button
+        // Menu button
         Button menuButton = new Button("Menu");
         menuButton.setLayoutX(RESX - 70);
         menuButton.setLayoutY(10);
+        menuButton.setOnAction(e -> stage.setScene(menuScene));
 
         // Points text
         Text textPoints = new Text(10, 35, "POINTS: " + numberHandler.getPoints());
@@ -83,7 +112,7 @@ public class Lefreks extends Application {
         textTimer.textProperty().bind(numberHandler.getText());
 
         // Target placed at the centre of the screen
-        Circle target = new Circle(RESX / 2, RESY / 2, targetSize, Color.INDIANRED);
+        Circle target = new Circle(RESX / 2, RESY / 2, numberHandler.getTargetSize(), Color.INDIANRED);
 
         // Mouse click event handler
         target.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -93,8 +122,8 @@ public class Lefreks extends Application {
 
                 numberHandler.setStartTimer(true);
 
-                target.setCenterX((int) (Math.random() * (RESX - 2 * targetSize) + targetSize)); //Math so target wouldn't go outside playing area
-                target.setCenterY((int) (Math.random() * (RESY - 2 * targetSize - INGAME_MENU_SIZE) + targetSize + INGAME_MENU_SIZE));
+                target.setCenterX((int) (Math.random() * (RESX - 2 * numberHandler.getTargetSize()) + numberHandler.getTargetSize())); //Math so target wouldn't go outside playing area
+                target.setCenterY((int) (Math.random() * (RESY - 2 * numberHandler.getTargetSize() - INGAME_MENU_SIZE) + numberHandler.getTargetSize() + INGAME_MENU_SIZE));
 
                 numberHandler.setPoints(numberHandler.getPoints() + 1);
                 textPoints.setText("POINTS: " + numberHandler.getPoints());

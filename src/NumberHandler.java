@@ -8,6 +8,7 @@ public class NumberHandler {
     // Variables
     private int points;
     private int timePassed = 0;
+    private int targetSize;
     private StringProperty timerText = new SimpleStringProperty("TIMER: " + getTimePassed());
     private boolean startTimer = false,
             startedTimer = false;
@@ -43,6 +44,14 @@ public class NumberHandler {
 
     public boolean isStartTimer() {
         return startTimer;
+    }
+
+    public int getTargetSize() {
+        return targetSize;
+    }
+
+    public void setTargetSize(int targetSize) {
+        this.targetSize = targetSize;
     }
 
     public StringProperty getText() {
