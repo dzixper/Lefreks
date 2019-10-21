@@ -6,16 +6,19 @@ import java.util.TimerTask;
 
 public class NumberHandler {
     // Variables
+    Timer timer;
     private int points;
     private int timePassed = 0;
     private int targetSize;
     private StringProperty timerText = new SimpleStringProperty("TIMER: " + getTimePassed());
+    private StringProperty pointsText = new SimpleStringProperty("POINTS: " + getPoints());
     private boolean startTimer = false,
             startedTimer = false;
 
     // Getters and setters
     public void setPoints(int points) {
         this.points = points;
+        pointsText.set("POINTS: " + getPoints());
     }
 
     public int getPoints() {
@@ -54,12 +57,32 @@ public class NumberHandler {
         this.targetSize = targetSize;
     }
 
-    public StringProperty getText() {
+    public StringProperty getTimerText() {
         return timerText;
     }
+    public StringProperty getPointsText() {
+        return pointsText;
+    }
+
+    public void reset() {
+        startCounting.cancel();
+        setPoints(0);
+        setTimePassed(0);
+        setStartTimer(false);
+        setStartedTimer(false);
+        timerText.set("TIMER: " + getTimePassed());
+        timer = new Timer();
+        startCounting = new TimerTask() {
+            @Override
+            public void run() {
+                setTimePassed(getTimePassed() + 1);
+                timerText.set("TIMER: " + getTimePassed());
+            }
+        };
+    }
+
 
     // Timer counting method
-    Timer timer = new Timer();
     TimerTask startCounting = new TimerTask() {
         @Override
         public void run() {
