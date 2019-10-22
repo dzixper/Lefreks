@@ -6,10 +6,10 @@ import java.util.TimerTask;
 
 public class NumberHandler {
     // Variables
-    Timer timer;
+    Timer timer; // TODO -- make it private
     private int points;
     private int timePassed = 0;
-    private int targetSize;
+    private static int targetSize;
     private StringProperty timerText = new SimpleStringProperty("TIMER: " + getTimePassed());
     private StringProperty pointsText = new SimpleStringProperty("POINTS: " + getPoints());
     private boolean startTimer = false,
