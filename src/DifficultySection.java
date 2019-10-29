@@ -25,6 +25,7 @@ public class DifficultySection {
         Button normalButton = new Button("Normal");
         normalButton.setOnAction(e -> {
             numberHandler.setTargetSize(30);
+            numberHandler.setTargetDuration(825); //ms value
             stage.setScene(GameSection.gameScene(stage));
             numberHandler.reset();
         });
@@ -32,6 +33,7 @@ public class DifficultySection {
         Button hardButton = new Button("Hard");
         hardButton.setOnAction(e -> {
             numberHandler.setTargetSize(15);
+            numberHandler.setTargetDuration(650); //ms value
             stage.setScene(GameSection.gameScene(stage));
             numberHandler.reset();
         });

@@ -21,8 +21,7 @@ import javafx.stage.Stage;
     public static Scene gameScene(Stage stage) {
         NumberHandler numberHandler = new NumberHandler();
         numberHandler.reset();
-
-
+        numberHandler.reset();
 
         // Playing area init
         Pane playingArea = new Pane();
@@ -34,7 +33,7 @@ import javafx.stage.Stage;
         Button menuButton = new Button("Menu");
         menuButton.setLayoutX(Lefreks.RESX - 70);
         menuButton.setLayoutY(10);
-        menuButton.setOnAction(e -> stage.setScene(MenuSection.menuScene(stage)));
+        menuButton.setOnAction(e -> {stage.setScene(MenuSection.menuScene(stage)); numberHandler.reset();});
 
         // Points text
         Text textPoints = new Text(10, 35, "");
@@ -60,7 +59,7 @@ import javafx.stage.Stage;
             target.setRadius(numberHandler.getTargetSize());
 
             // Changing target color after starting the game
-            target.setFill(Color.DARKGREEN);
+            target.setFill(Color.INDIANRED);
 
             target.setCenterX((int) (Math.random() * (Lefreks.RESX - 2 * numberHandler.getTargetSize()) + numberHandler.getTargetSize())); //Math so target wouldn't go outside playing area
             target.setCenterY((int) (Math.random() * (Lefreks.RESY - 2 * numberHandler.getTargetSize() - INGAME_MENU_SIZE) + numberHandler.getTargetSize() + INGAME_MENU_SIZE));
