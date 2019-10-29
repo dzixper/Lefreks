@@ -13,13 +13,16 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class GameSection {
+    public class GameSection {
+
+    static int INGAME_MENU_SIZE = 90;
+    public static Circle target; // TODO -- make it private
 
     public static Scene gameScene(Stage stage) {
         NumberHandler numberHandler = new NumberHandler();
         numberHandler.reset();
 
-        int INGAME_MENU_SIZE = 90;
+
 
         // Playing area init
         Pane playingArea = new Pane();
@@ -47,8 +50,7 @@ public class GameSection {
 
 
         // Target placed at the centre of the screen
-        Circle target = new Circle(Lefreks.RESX / 2, Lefreks.RESY / 2, 10, Color.INDIANRED);
-
+        target = new Circle(Lefreks.RESX / 2, Lefreks.RESY / 2, 10, Color.INDIANRED);
         // Mouse click event handler
         target.setOnMouseClicked(e -> {
 
@@ -58,7 +60,7 @@ public class GameSection {
             target.setRadius(numberHandler.getTargetSize());
 
             // Changing target color after starting the game
-            target.setFill(Color.DARKORCHID);
+            target.setFill(Color.DARKGREEN);
 
             target.setCenterX((int) (Math.random() * (Lefreks.RESX - 2 * numberHandler.getTargetSize()) + numberHandler.getTargetSize())); //Math so target wouldn't go outside playing area
             target.setCenterY((int) (Math.random() * (Lefreks.RESY - 2 * numberHandler.getTargetSize() - INGAME_MENU_SIZE) + numberHandler.getTargetSize() + INGAME_MENU_SIZE));
@@ -66,7 +68,7 @@ public class GameSection {
             numberHandler.setPoints(numberHandler.getPoints() + 1);
 
             if (numberHandler.isStartTimer() && !numberHandler.isStartedTimer()) {
-                numberHandler.timer.scheduleAtFixedRate(numberHandler.startCounting, 1000, 1000);
+                numberHandler.timer.scheduleAtFixedRate(numberHandler.startCounting, 0, 1);
                 numberHandler.setStartedTimer(true);
             }
         });

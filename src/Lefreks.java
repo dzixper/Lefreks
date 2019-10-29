@@ -5,7 +5,7 @@ public class Lefreks extends Application {
 
     NumberHandler numberHandler = new NumberHandler();
 
-    static int RESX = 1024, RESY = 768;
+    static int RESX = 600, RESY = 690;
 
     @Override
     public void start(Stage stage) {
