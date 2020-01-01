@@ -1,9 +1,5 @@
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -13,7 +9,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-    public class GameSection {
+public class GameSection {
+
+    /*public void writeScore() {
+        int score = NumberHandler.getPoints();
+        PrintWriter out = new PrintWriter("filename.txt");
+        out.println(score);
+    }*/ // TODO
 
     static int INGAME_MENU_SIZE = 90;
     public static Circle target; // TODO -- make it private
@@ -31,8 +33,8 @@ import javafx.stage.Stage;
 
         // Menu button
         Button menuButton = new Button("Menu");
-        menuButton.setLayoutX(Lefreks.RESX - 70);
-        menuButton.setLayoutY(10);
+        menuButton.setLayoutX(Lefreks.RESX - 100);
+        menuButton.setLayoutY(25);
         menuButton.setOnAction(e -> {stage.setScene(MenuSection.menuScene(stage)); numberHandler.reset();});
 
         // Points text
@@ -70,13 +72,19 @@ import javafx.stage.Stage;
                 numberHandler.timer.scheduleAtFixedRate(numberHandler.startCounting, 0, 1);
                 numberHandler.setStartedTimer(true);
             }
+            /*if (numberHandler.getTimePassed() >= 3) {
+                int score = NumberHandler.getPoints();
+                PrintWriter out = new PrintWriter("filename.txt");
+                out.println(score);
+                stage.setScene(MenuSection.menuScene(stage));
+            }*/ // TODO
         });
 
         // Add shapes to a group
         playingArea.getChildren().addAll(guiBar, menuButton, target, textPoints, textTimer);
 
         // Area styling
-        playingArea.setBackground(new Background(new BackgroundFill(Color.rgb(255, 251, 235), CornerRadii.EMPTY, Insets.EMPTY)));
+        playingArea.getStylesheets().add("menuSection.css");
         return new Scene(playingArea, Lefreks.RESX, Lefreks.RESY);
     }
 }

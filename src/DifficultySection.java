@@ -1,9 +1,7 @@
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class DifficultySection {
@@ -22,7 +20,7 @@ public class DifficultySection {
         });
 
 
-        Button normalButton = new Button("Normal");
+        Button normalButton = new Button("Medium");
         normalButton.setOnAction(e -> {
             numberHandler.setTargetSize(30);
             numberHandler.setTargetDuration(825); //ms value
@@ -45,8 +43,7 @@ public class DifficultySection {
         difficultyVbox.getChildren().addAll(easyButton, normalButton, hardButton);
         difficultyVbox.setAlignment(Pos.CENTER);
         difficultyArea.setCenter(difficultyVbox);
-
-        difficultyArea.setBackground(new Background(new BackgroundFill(Color.rgb(255, 251, 235), CornerRadii.EMPTY, Insets.EMPTY)));
+        difficultyArea.getStylesheets().add("menuSection.css");
         return new Scene(difficultyArea, Lefreks.RESX, Lefreks.RESY);
     }
 }

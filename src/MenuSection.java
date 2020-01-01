@@ -1,9 +1,7 @@
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class MenuSection {
@@ -27,8 +25,7 @@ public class MenuSection {
         menuVbox.setAlignment(Pos.CENTER);
         menuArea.setCenter(menuVbox);
 
-        // Area styling
-        menuArea.setBackground(new Background(new BackgroundFill(Color.rgb(255, 251, 235), CornerRadii.EMPTY, Insets.EMPTY)));
+        menuArea.getStylesheets().add("menuSection.css");
         return new Scene(menuArea, Lefreks.RESX, Lefreks.RESY);
     }
 }
