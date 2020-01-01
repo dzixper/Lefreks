@@ -2,12 +2,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import javafx.scene.image.Image;
 
 public class GameSection {
 
@@ -18,7 +21,7 @@ public class GameSection {
     }*/ // TODO
 
     static int INGAME_MENU_SIZE = 90;
-    public static Circle target; // TODO -- make it private
+    public static Circle target;
 
     public static Scene gameScene(Stage stage) {
         NumberHandler numberHandler = new NumberHandler();
@@ -60,8 +63,9 @@ public class GameSection {
             // Difficulty variable
             target.setRadius(numberHandler.getTargetSize());
 
-            // Changing target color after starting the game
-            target.setFill(Color.INDIANRED);
+            // Changing target image after starting the game
+            Image im = new Image("goal-2.png",false);
+            target.setFill(new ImagePattern(im));
 
             target.setCenterX((int) (Math.random() * (Lefreks.RESX - 2 * numberHandler.getTargetSize()) + numberHandler.getTargetSize())); //Math so target wouldn't go outside playing area
             target.setCenterY((int) (Math.random() * (Lefreks.RESY - 2 * numberHandler.getTargetSize() - INGAME_MENU_SIZE) + numberHandler.getTargetSize() + INGAME_MENU_SIZE));
@@ -72,12 +76,6 @@ public class GameSection {
                 numberHandler.timer.scheduleAtFixedRate(numberHandler.startCounting, 0, 1);
                 numberHandler.setStartedTimer(true);
             }
-            /*if (numberHandler.getTimePassed() >= 3) {
-                int score = NumberHandler.getPoints();
-                PrintWriter out = new PrintWriter("filename.txt");
-                out.println(score);
-                stage.setScene(MenuSection.menuScene(stage));
-            }*/ // TODO
         });
 
         // Add shapes to a group

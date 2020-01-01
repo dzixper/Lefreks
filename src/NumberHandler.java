@@ -1,5 +1,6 @@
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,6 +19,7 @@ public class NumberHandler {
     private StringProperty pointsText = new SimpleStringProperty("POINTS: " + getPoints());
     private boolean startTimer = false;
     private boolean startedTimer = false;
+    String leaderboardsArray[] = {"First Place:1","Second Place:1","Third Place:1"};
 
     // Getters and setters
     public void setTimePassedTemp(int timePassedTemp) {
@@ -118,10 +120,19 @@ public class NumberHandler {
                     GameSection.target.setCenterY((int) (Math.random() * (Lefreks.RESY - 2 * getTargetSize() - GameSection.INGAME_MENU_SIZE) + getTargetSize() + GameSection.INGAME_MENU_SIZE));
                     setTargetDurationTime(0);
                 }
+                if (getTimePassed() >= 2) {
+                    for (int i = 0; i < leaderboardsArray.length; i++) {
+                        String value = leaderboardsArray[i].substring(leaderboardsArray[i].lastIndexOf(':') + 1);
+                        if (getPoints() > Integer.parseInt(value)) {
+                            leaderboardsArray[i] = leaderboardsArray[i].substring(0, leaderboardsArray[i].lastIndexOf(':') + 1) + getPoints();
+                            System.out.println(leaderboardsArray[i]);
+                            break;
+                        }
+                    }
+                }
             }
         };
     }
-
 
     // Timer counting method
     TimerTask startCounting = new TimerTask() {
