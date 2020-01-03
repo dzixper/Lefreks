@@ -24,7 +24,7 @@ public class LeaderboardsSection {
         BorderPane leaderboardsArea = new BorderPane();
 
         Button menuButton = new Button("Menu");
-        menuButton.setOnAction(e -> {stage.setScene(MenuSection.menuScene(stage));});
+        menuButton.setOnAction(e -> stage.setScene(MenuSection.menuScene(stage)));
 
         Text bestScor = new Text();
         bestScor.setText("Your best score: " + bestScore);

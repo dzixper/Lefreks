@@ -5,9 +5,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class NumberHandler {
-
-    LeaderboardsSection leaderboardsSection = new LeaderboardsSection();
-
     // Variables
     Timer timer;
     private int points;
@@ -31,7 +28,7 @@ public class NumberHandler {
     }
 
     public void setTargetDuration(int targetDuration) {
-        this.targetDuration = targetDuration;
+        NumberHandler.targetDuration = targetDuration;
     }
 
     public int getTargetDuration() {
@@ -86,7 +83,7 @@ public class NumberHandler {
     }
 
     public void setTargetSize(int targetSize) {
-        this.targetSize = targetSize;
+        NumberHandler.targetSize = targetSize;
     }
 
     public StringProperty getTimerText() {
@@ -122,8 +119,8 @@ public class NumberHandler {
                     GameSection.target.setCenterY((int) (Math.random() * (Lefreks.RESY - 2 * getTargetSize() - GameSection.INGAME_MENU_SIZE) + getTargetSize() + GameSection.INGAME_MENU_SIZE));
                     setTargetDurationTime(0);
                 }
-                if (getPoints() > leaderboardsSection.getBestScore()) {
-                     leaderboardsSection.setBestScore(getPoints());
+                if (getPoints() > LeaderboardsSection.getBestScore()) {
+                     LeaderboardsSection.setBestScore(getPoints());
                 }
             }
         };
