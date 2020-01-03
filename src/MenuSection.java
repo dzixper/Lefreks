@@ -12,7 +12,7 @@ public class MenuSection {
         Button playButton = new Button("Play");
         playButton.setOnAction(e -> stage.setScene(DifficultySection.difficultyScene(stage)));
 
-        Button leaderboardButton = new Button("Leaderboard"); // TODO
+        Button leaderboardButton = new Button("Leaderboard");
         leaderboardButton.setOnAction(e -> stage.setScene(LeaderboardsSection.leaderboardsScene(stage)));
 
         Button exitButton = new Button("Exit");

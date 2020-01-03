@@ -1,25 +1,21 @@
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 public class GameSection {
-
-    /*public void writeScore() {
-        int score = NumberHandler.getPoints();
-        PrintWriter out = new PrintWriter("filename.txt");
-        out.println(score);
-    }*/ // TODO
-
     static int INGAME_MENU_SIZE = 90;
     public static Circle target;
 
@@ -52,6 +48,18 @@ public class GameSection {
         textTimer.setFill(Color.INDIANRED);
         textTimer.textProperty().bind(numberHandler.getTimerText());
 
+        playingArea.setOnMouseMoved(e -> {
+            if (numberHandler.getTimePassed() >= 5) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game Over");
+                alert.setHeaderText(null);
+                alert.setContentText("Your score: " + numberHandler.getPoints());
+                numberHandler.reset();
+                alert.showAndWait();
+                stage.setScene(LeaderboardsSection.leaderboardsScene(stage));
+            }
+        });
+
 
         // Target placed at the centre of the screen
         target = new Circle(Lefreks.RESX / 2, Lefreks.RESY / 2, 10, Color.INDIANRED);
@@ -66,9 +74,26 @@ public class GameSection {
             // Changing target image after starting the game
             Image im = new Image("goal-2.png",false);
             target.setFill(new ImagePattern(im));
+            int randX = (int) (Math.random() * (Lefreks.RESX - 2 * numberHandler.getTargetSize()) + numberHandler.getTargetSize());
+            int randY = (int) (Math.random() * (Lefreks.RESY - 2 * numberHandler.getTargetSize() - INGAME_MENU_SIZE) + numberHandler.getTargetSize() + INGAME_MENU_SIZE); //Math so target wouldn't go outside playing area
 
-            target.setCenterX((int) (Math.random() * (Lefreks.RESX - 2 * numberHandler.getTargetSize()) + numberHandler.getTargetSize())); //Math so target wouldn't go outside playing area
-            target.setCenterY((int) (Math.random() * (Lefreks.RESY - 2 * numberHandler.getTargetSize() - INGAME_MENU_SIZE) + numberHandler.getTargetSize() + INGAME_MENU_SIZE));
+            // Target animation
+            Line path = new Line(target.getCenterX(),target.getCenterY(),randX,randY);
+            PathTransition pathTransition = new PathTransition();
+            pathTransition.setDuration(Duration.millis(3*(target.getCenterX()+randX)));
+            pathTransition.setPath(path);
+            pathTransition.setNode(target);
+            pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+            pathTransition.setCycleCount(Timeline.INDEFINITE);
+            pathTransition.setAutoReverse(true);
+            pathTransition.play();
+
+
+            // Set physical position of the target
+            target.setCenterX(randX);
+            target.setCenterY(randY);
+
+
 
             numberHandler.setPoints(numberHandler.getPoints() + 1);
 

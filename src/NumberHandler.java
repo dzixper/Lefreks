@@ -1,14 +1,15 @@
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.Alert;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class NumberHandler {
 
+    LeaderboardsSection leaderboardsSection = new LeaderboardsSection();
+
     // Variables
-    Timer timer; // TODO -- make it private
+    Timer timer;
     private int points;
     private int timePassed = 0; // Timer value
     private int timePassedTemp; // Timer method is ran every 1ms so it's temporary variable
@@ -19,7 +20,6 @@ public class NumberHandler {
     private StringProperty pointsText = new SimpleStringProperty("POINTS: " + getPoints());
     private boolean startTimer = false;
     private boolean startedTimer = false;
-    String leaderboardsArray[] = {"First Place:1","Second Place:1","Third Place:1"};
 
     // Getters and setters
     public void setTimePassedTemp(int timePassedTemp) {
@@ -112,23 +112,18 @@ public class NumberHandler {
                 setTargetDurationTime(getTargetDurationTime() + 1);
                 setTimePassedTemp(getTimePassedTemp() + 1);
                 if (getTimePassedTemp() == 1000) {
+                    // Every 1000ms
                     setTimePassed(getTimePassed() + 1);
                     setTimePassedTemp(0);
                 }
                 if (getTargetDurationTime() == getTargetDuration()) {
+                    // Used to make target time duration on a screen independent of user
                     GameSection.target.setCenterX((int) (Math.random() * (Lefreks.RESX - 2 * getTargetSize()) + getTargetSize())); //Math so target wouldn't go outside playing area
                     GameSection.target.setCenterY((int) (Math.random() * (Lefreks.RESY - 2 * getTargetSize() - GameSection.INGAME_MENU_SIZE) + getTargetSize() + GameSection.INGAME_MENU_SIZE));
                     setTargetDurationTime(0);
                 }
-                if (getTimePassed() >= 2) {
-                    for (int i = 0; i < leaderboardsArray.length; i++) {
-                        String value = leaderboardsArray[i].substring(leaderboardsArray[i].lastIndexOf(':') + 1);
-                        if (getPoints() > Integer.parseInt(value)) {
-                            leaderboardsArray[i] = leaderboardsArray[i].substring(0, leaderboardsArray[i].lastIndexOf(':') + 1) + getPoints();
-                            System.out.println(leaderboardsArray[i]);
-                            break;
-                        }
-                    }
+                if (getPoints() > leaderboardsSection.getBestScore()) {
+                     leaderboardsSection.setBestScore(getPoints());
                 }
             }
         };

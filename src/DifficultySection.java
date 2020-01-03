@@ -1,8 +1,10 @@
+import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class DifficultySection {
     public static Scene difficultyScene(Stage stage) {
