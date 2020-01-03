@@ -89,6 +89,7 @@ public class NumberHandler {
     public StringProperty getTimerText() {
         return timerText;
     }
+
     public StringProperty getPointsText() {
         return pointsText;
     }
@@ -120,7 +121,7 @@ public class NumberHandler {
                     setTargetDurationTime(0);
                 }
                 if (getPoints() > LeaderboardsSection.getBestScore()) {
-                     LeaderboardsSection.setBestScore(getPoints());
+                    LeaderboardsSection.setBestScore(getPoints());
                 }
             }
         };

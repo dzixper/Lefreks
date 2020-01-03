@@ -3,16 +3,17 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class GameSection {
@@ -34,7 +35,10 @@ public class GameSection {
         Button menuButton = new Button("Menu");
         menuButton.setLayoutX(Lefreks.RESX - 100);
         menuButton.setLayoutY(25);
-        menuButton.setOnAction(e -> {stage.setScene(MenuSection.menuScene(stage)); numberHandler.reset();});
+        menuButton.setOnAction(e -> {
+            stage.setScene(MenuSection.menuScene(stage));
+            numberHandler.reset();
+        });
 
         // Points text
         Text textPoints = new Text(10, 35, "");
@@ -72,15 +76,15 @@ public class GameSection {
             target.setRadius(numberHandler.getTargetSize());
 
             // Changing target image after starting the game
-            Image im = new Image("goal-2.png",false);
+            Image im = new Image("goal-2.png", false);
             target.setFill(new ImagePattern(im));
             int randX = (int) (Math.random() * (Lefreks.RESX - 2 * numberHandler.getTargetSize()) + numberHandler.getTargetSize());
             int randY = (int) (Math.random() * (Lefreks.RESY - 2 * numberHandler.getTargetSize() - INGAME_MENU_SIZE) + numberHandler.getTargetSize() + INGAME_MENU_SIZE); //Math so target wouldn't go outside playing area
 
             // Target animation
-            Line path = new Line(target.getCenterX(),target.getCenterY(),randX,randY);
+            Line path = new Line(target.getCenterX(), target.getCenterY(), randX, randY);
             PathTransition pathTransition = new PathTransition();
-            pathTransition.setDuration(Duration.millis(3*(target.getCenterX()+randX)));
+            pathTransition.setDuration(Duration.millis(3 * (target.getCenterX() + randX)));
             pathTransition.setPath(path);
             pathTransition.setNode(target);
             pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -92,7 +96,6 @@ public class GameSection {
             // Set physical position of the target
             target.setCenterX(randX);
             target.setCenterY(randY);
-
 
 
             numberHandler.setPoints(numberHandler.getPoints() + 1);

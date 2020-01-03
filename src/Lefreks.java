@@ -3,9 +3,12 @@ import javafx.stage.Stage;
 
 public class Lefreks extends Application {
 
+    static int RESX = 600, RESY = 690;
     NumberHandler numberHandler = new NumberHandler();
 
-    static int RESX = 600, RESY = 690;
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage stage) {
@@ -18,10 +21,6 @@ public class Lefreks extends Application {
     @Override
     public void stop() {
         numberHandler.timer.cancel(); // TODO -- do it without throwing an error
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }
